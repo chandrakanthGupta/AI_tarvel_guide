@@ -4,338 +4,870 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Travel Guide</title>
+  <title>WanderAI • Liquid Glassmorphism AI Travel Guide</title>
+  <meta name="description" content="Experience world monuments and heritage destinations with liquid glassmorphic aesthetics, AI multilingual voice narration, and live travel insights.">
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
-    rel="stylesheet">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Playfair Display"', 'serif'],
+            heading: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              400: '#fb923c',
+              500: '#ff7a18',
+              600: '#ea580c',
+            }
+          }
+        }
+      }
+    }
+  </script>
 
   <style>
-    .no-scrollbar::-webkit-scrollbar {
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(10, 15, 29, 0.6);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 122, 24, 0.5);
+    }
+
+    /* Animated Liquid Blobs */
+    @keyframes floatOrb1 {
+      0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      33% { transform: translate(120px, 80px) scale(1.15) rotate(45deg); }
+      66% { transform: translate(-80px, 140px) scale(0.9) rotate(-30deg); }
+    }
+    @keyframes floatOrb2 {
+      0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      33% { transform: translate(-140px, -60px) scale(0.95) rotate(-40deg); }
+      66% { transform: translate(90px, -110px) scale(1.2) rotate(35deg); }
+    }
+    @keyframes floatOrb3 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(100px, -90px) scale(1.25); }
+    }
+    @keyframes floatOrb4 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-100px, 110px) scale(0.85); }
+    }
+
+    .liquid-orb-1 {
+      animation: floatOrb1 20s infinite ease-in-out;
+    }
+    .liquid-orb-2 {
+      animation: floatOrb2 24s infinite ease-in-out;
+    }
+    .liquid-orb-3 {
+      animation: floatOrb3 18s infinite ease-in-out;
+    }
+    .liquid-orb-4 {
+      animation: floatOrb4 22s infinite ease-in-out;
+    }
+
+    /* Core Liquid Glass Tokens */
+    .liquid-glass-nav {
+      background: rgba(13, 19, 33, 0.55);
+      backdrop-filter: blur(24px) saturate(190%);
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .liquid-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
+      transition: all 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .liquid-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 80%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+      transform: skewX(-25deg);
+      transition: all 0.75s ease;
+      pointer-events: none;
+      z-index: 30;
+    }
+
+    .liquid-card:hover::before {
+      left: 150%;
+    }
+
+    .liquid-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      border-color: rgba(255, 122, 24, 0.45);
+      box-shadow: 0 24px 60px -15px rgba(255, 122, 24, 0.25), 0 0 30px rgba(255, 122, 24, 0.15), inset 0 1px 2px 0 rgba(255, 255, 255, 0.35);
+    }
+
+    .liquid-panel {
+      background: linear-gradient(145deg, rgba(20, 28, 48, 0.75) 0%, rgba(10, 15, 28, 0.85) 100%);
+      backdrop-filter: blur(28px) saturate(200%);
+      -webkit-backdrop-filter: blur(28px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.7), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+    }
+
+    .liquid-pill {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .liquid-pill:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 122, 24, 0.4);
+      transform: scale(1.05);
+    }
+    .liquid-pill.active {
+      background: linear-gradient(135deg, #ff7a18 0%, #ea580c 100%);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #ffffff !important;
+      box-shadow: 0 0 24px rgba(255, 122, 24, 0.5), inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    /* Soundwave Visualizer Bars */
+    .visualizer-bar {
+      width: 3.5px;
+      border-radius: 9999px;
+      background: linear-gradient(180deg, #ff7a18 0%, #f59e0b 100%);
+      box-shadow: 0 0 8px rgba(255, 122, 24, 0.6);
+      transition: height 0.15s ease;
+      height: 6px;
+    }
+
+    .visualizer-playing .visualizer-bar {
+      animation: soundwave 1s infinite ease-in-out alternate;
+    }
+    .visualizer-playing .visualizer-bar:nth-child(1) { animation-delay: 0.1s; }
+    .visualizer-playing .visualizer-bar:nth-child(2) { animation-delay: 0.3s; }
+    .visualizer-playing .visualizer-bar:nth-child(3) { animation-delay: 0.2s; }
+    .visualizer-playing .visualizer-bar:nth-child(4) { animation-delay: 0.5s; }
+    .visualizer-playing .visualizer-bar:nth-child(5) { animation-delay: 0.15s; }
+    .visualizer-playing .visualizer-bar:nth-child(6) { animation-delay: 0.4s; }
+    .visualizer-playing .visualizer-bar:nth-child(7) { animation-delay: 0.25s; }
+    .visualizer-playing .visualizer-bar:nth-child(8) { animation-delay: 0.35s; }
+
+    @keyframes soundwave {
+      0% { height: 4px; }
+      50% { height: 28px; }
+      100% { height: 12px; }
+    }
+
+    /* Dynamic Grid Layout Transitions */
+    .cards-grid.faded .place-card:not(.active) {
       display: none;
     }
 
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+    .cards-grid.faded .place-card.active {
+      display: block;
+      width: 100%;
+      max-width: 480px;
+      animation: cardFocus 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
     }
 
-    /* Floating preview card animations */
+    @keyframes cardFocus {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
     #experience {
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      transform: translateX(30px);
+      transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    #experience.hidden {
+      display: none;
+    }
+    #experience:not(.visible) {
       opacity: 0;
+      transform: translateY(24px);
     }
-
     #experience.visible {
-      transform: translateX(0);
       opacity: 1;
+      transform: translateY(0);
     }
 
-    /* Cards container width transition */
-    .cards-wrapper {
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Glowing button styling */
+    .glow-btn {
+      position: relative;
+      background: linear-gradient(135deg, #ff7a18 0%, #ea580c 100%);
+      box-shadow: 0 0 25px rgba(255, 122, 24, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
-
-    /* Smooth backdrop fade for unselected cards */
-    .cards {
-      transition: opacity 0.3s ease;
-    }
-
-    .cards.faded .place-card:not(.active) {
-      opacity: 0.4;
-      filter: grayscale(40%);
-    }
-
-    .place-card {
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    .glow-btn:hover {
+      box-shadow: 0 0 35px rgba(255, 122, 24, 0.65), inset 0 1px 2px 0 rgba(255, 255, 255, 0.6);
+      transform: translateY(-2px);
     }
   </style>
 </head>
 
-<body class="bg-[#faf9f6] text-gray-800 font-['Inter',_sans-serif] min-h-screen flex flex-col justify-between">
+<body class="min-h-screen text-slate-100 bg-[#070b14] font-sans selection:bg-[#ff7a18] selection:text-white flex flex-col justify-between relative overflow-x-hidden">
 
-  <div>
-    <!-- Navbar -->
-    <nav class="flex items-center justify-between px-8 py-6 max-w-7xl mx-auto w-full">
-      <div class="flex items-center gap-3">
-        <div
-          class="w-10 h-10 rounded-full bg-[#ff8a1f] flex items-center justify-center text-white font-bold text-xl shadow-md shadow-orange-500/20">
-          ✈
+  <!-- Ambient Liquid Glow Background Orbs -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="liquid-orb-1 absolute top-[-10%] left-[-8%] w-[560px] h-[560px] rounded-full bg-gradient-to-tr from-[#ff7a18]/30 via-[#f97316]/20 to-transparent blur-[110px]"></div>
+    <div class="liquid-orb-2 absolute top-[25%] right-[-10%] w-[640px] h-[640px] rounded-full bg-gradient-to-br from-[#7928ca]/25 via-[#4f46e5]/20 to-transparent blur-[125px]"></div>
+    <div class="liquid-orb-3 absolute bottom-[-15%] left-[20%] w-[580px] h-[580px] rounded-full bg-gradient-to-tr from-[#0284c7]/25 via-[#06b6d4]/15 to-transparent blur-[120px]"></div>
+    <div class="liquid-orb-4 absolute top-[55%] left-[45%] w-[420px] h-[420px] rounded-full bg-gradient-to-tl from-[#e11d48]/20 via-[#f59e0b]/15 to-transparent blur-[100px]"></div>
+  </div>
+
+  <!-- Top Liquid Glass Navigation -->
+  <header class="fixed top-0 left-0 w-full z-50 liquid-glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="#" id="brandLogo" class="flex items-center gap-3.5 shrink-0 group">
+        <div class="w-11 h-11 rounded-2xl flex items-center justify-center bg-gradient-to-tr from-[#ff7a18] via-[#ea580c] to-[#f59e0b] shadow-[0_0_20px_rgba(255,122,24,0.45)] border border-white/30 group-hover:scale-105 transition-all duration-300">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-1-13l3.5 3.5L11 11l-3.5-3.5L11 7zM9.5 14.5L13 11l1.5 3.5-3.5 1.5-1.5-1.5z"></path>
+          </svg>
         </div>
-        <span class="font-['Playfair_Display',_serif] text-2xl font-bold text-gray-900 tracking-tight">Wanderlust</span>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-display font-extrabold text-2xl text-white tracking-tight leading-none group-hover:text-brand-400 transition-colors">WanderAI</span>
+            <span class="bg-white/10 backdrop-blur-md border border-white/20 text-orange-300 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full shadow-[0_0_10px_rgba(255,122,24,0.3)]">Liquid Glass</span>
+          </div>
+          <div class="text-[11px] text-slate-400 font-medium tracking-wide mt-1">Smart Multilingual Voice Companion</div>
+        </div>
+      </a>
+
+      <!-- Search Destination Bar -->
+      <div class="flex items-center gap-2 flex-1 justify-end max-w-xl">
+        <div class="relative w-full max-w-md group">
+          <input id="searchInput" type="text" placeholder="Search any destination (e.g. Taj Mahal, Kyoto, Rome)..."
+            class="w-full pl-11 pr-10 py-2.5 rounded-full border border-white/15 bg-white/[0.06] backdrop-blur-md text-sm font-medium text-white placeholder-slate-400 focus:bg-white/[0.12] focus:outline-none focus:border-brand-500 focus:ring-4 focus:ring-orange-500/20 transition-all duration-300 group-hover:border-white/25">
+          
+          <div class="absolute left-4 top-3 text-slate-400 group-focus-within:text-brand-400 transition-colors pointer-events-none">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+
+          <button id="clearSearchBtn" class="hidden absolute right-3.5 top-2.5 text-slate-400 hover:text-white p-0.5 rounded-full">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+        <button id="searchBtn"
+          class="glow-btn px-5 py-2.5 rounded-full text-white font-semibold text-xs tracking-wide uppercase active:scale-95 transition-all duration-300 flex items-center gap-1.5 shrink-0 border border-white/20">
+          <span>Explore</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
       </div>
 
-      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
-        <a href="#" class="text-gray-900 font-semibold">Destinations</a>
-        <a href="#" class="hover:text-gray-900 transition-colors">Audio Guides</a>
-        <a href="#" class="hover:text-[#ff8a1f] transition-colors">Trip Planner</a>
-      </div>
+    </div>
+  </header>
 
-      <div class="flex items-center gap-4">
-        <button
-          class="px-5 py-2.5 rounded-full text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors">Sign
-          In</button>
-        <button
-          class="px-5 py-2.5 bg-[#ff8a1f] hover:bg-[#e07512] text-white rounded-full text-sm font-semibold shadow-lg shadow-orange-500/25 transition-all transform hover:-translate-y-0.5">Explore</button>
-      </div>
-    </nav>
+  <!-- Main Hero & Body Section -->
+  <main class="pt-28 pb-20 px-4 sm:px-6 relative z-10">
+    <div class="max-w-7xl mx-auto">
 
-    <!-- Hero Header -->
-    <header class="px-8 pt-8 pb-12 max-w-7xl mx-auto w-full">
-      <div class="max-w-2xl">
-        <span class="text-xs font-bold uppercase tracking-widest text-[#ff8a1f] mb-3 block">AI Audio Experiences</span>
-        <h1
-          class="text-4xl md:text-6xl font-['Playfair_Display',_serif] font-bold text-gray-900 leading-[1.15] mb-4">
-          Listen to the stories <br><span class="italic font-normal text-gray-500">behind the places.</span>
+      <!-- Hero Header Section -->
+      <section id="heroSection" class="text-center max-w-3xl mx-auto pt-8 pb-10 transition-all duration-500">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] backdrop-blur-xl border border-white/15 text-orange-300 text-xs font-semibold uppercase tracking-wider mb-5 shadow-[0_0_20px_rgba(255,122,24,0.15)]">
+          <span class="w-2 h-2 rounded-full bg-brand-500 animate-ping"></span>
+          <span>Gemini 3.8 Flash & Murf FALCON Voice Studio</span>
+        </div>
+
+        <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.15]">
+          Your Liquid Voice Guide to the <span class="bg-gradient-to-r from-amber-300 via-orange-400 to-rose-400 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(255,122,24,0.4)]">Wonders of Earth</span>
         </h1>
-        <p class="text-gray-600 text-lg leading-relaxed mb-8">
-          Pick a destination below to generate a personalized AI audio guide in your preferred language and voice.
+
+        <p class="mt-4 text-slate-300 text-base sm:text-lg leading-relaxed font-normal max-w-2xl mx-auto">
+          Tap any world monument or search any global place. Immerse yourself in multilingual audio stories, cultural lore, and travel secrets.
         </p>
 
-        <!-- Search Bar -->
-        <div
-          class="bg-white p-2.5 rounded-full shadow-[0_10px_30px_-5px_rgba(0,0,0,0.05)] border border-gray-100 flex items-center gap-3 max-w-lg">
-          <div class="pl-4 text-gray-400">🔍</div>
-          <input type="text" id="searchInput" placeholder="Search destination (e.g. Taj Mahal, Hawa Mahal)..."
-            class="w-full text-sm focus:outline-none text-gray-800 placeholder-gray-400 font-medium">
-          <button id="searchBtn"
-            class="px-6 py-3 bg-[#ff8a1f] hover:bg-[#e07512] text-white font-semibold text-sm rounded-full transition-all shrink-0 shadow-md shadow-orange-500/20">Search</button>
-        </div>
-      </div>
-    </header>
-
-    <!-- Main Section -->
-    <main class="px-8 pb-20 max-w-7xl mx-auto w-full">
-      <div class="flex flex-col lg:flex-row gap-8 items-start relative">
-
-        <!-- Grid of Places -->
-        <div id="cardsWrapper" class="cards-wrapper flex-1 w-full">
-          <div class="flex items-center justify-between mb-6">
-            <h2 class="text-xl font-['Playfair_Display',_serif] font-bold text-gray-900">Popular Destinations</h2>
-            <span class="text-xs text-gray-400 font-medium">Click a place to generate audio</span>
-          </div>
-
-          <div class="cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-            <!-- Card 1 -->
-            <div
-              class="place-card bg-white rounded-[2rem] overflow-hidden border border-gray-100 cursor-pointer hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] hover:border-orange-100 group relative lg:[&.active]:w-[480px] lg:[&.active]:max-w-none"
-              data-place="Taj Mahal"
-              data-image="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/Taj_Mahal.jpg">
-              <div class="overflow-hidden h-[200px] relative">
-                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10">
-                </div>
-                <img
-                  src="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/Taj_Mahal.jpg"
-                  alt="Taj Mahal"
-                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                <div
-                  class="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase text-gray-800 shadow-sm">
-                  Agra</div>
-              </div>
-              <div class="p-6">
-                <span class="text-[11px] text-[#ff8a1f] font-bold uppercase tracking-widest">Heritage</span>
-                <h3
-                  class="mt-2 mb-1 text-xl font-['Playfair_Display',_serif] font-bold text-gray-900 group-hover:text-[#ff8a1f] transition-colors">
-                  Taj Mahal</h3>
-                <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed">An immense mausoleum of white marble,
-                  built in Agra between 1631 and 1648.</p>
-              </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div
-              class="place-card bg-white rounded-[2rem] overflow-hidden border border-gray-100 cursor-pointer hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] hover:border-orange-100 group relative lg:[&.active]:w-[480px] lg:[&.active]:max-w-none"
-              data-place="Hawa Mahal"
-              data-image="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg">
-              <div class="overflow-hidden h-[200px] relative">
-                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10">
-                </div>
-                <img
-                  src="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg"
-                  alt="Hawa Mahal"
-                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                <div
-                  class="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase text-gray-800 shadow-sm">
-                  Jaipur</div>
-              </div>
-              <div class="p-6">
-                <span class="text-[11px] text-[#ff8a1f] font-bold uppercase tracking-widest">Architecture</span>
-                <h3
-                  class="mt-2 mb-1 text-xl font-['Playfair_Display',_serif] font-bold text-gray-900 group-hover:text-[#ff8a1f] transition-colors">
-                  Hawa Mahal</h3>
-                <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed">The 'Palace of Winds', a palace in Jaipur,
-                  India, made with the red and pink sandstone.</p>
-              </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div
-              class="place-card bg-white rounded-[2rem] overflow-hidden border border-gray-100 cursor-pointer hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] hover:border-orange-100 group relative lg:[&.active]:w-[480px] lg:[&.active]:max-w-none"
-              data-place="Golden Temple"
-              data-image="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/The_Golden_Temple_of_Amrithsar_7.jpg">
-              <div class="overflow-hidden h-[200px] relative">
-                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10">
-                </div>
-                <img
-                  src="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/The_Golden_Temple_of_Amrithsar_7.jpg"
-                  alt="Golden Temple"
-                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                <div
-                  class="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase text-gray-800 shadow-sm">
-                  Amritsar</div>
-              </div>
-              <div class="p-6">
-                <span class="text-[11px] text-[#ff8a1f] font-bold uppercase tracking-widest">Spiritual</span>
-                <h3
-                  class="mt-2 mb-1 text-xl font-['Playfair_Display',_serif] font-bold text-gray-900 group-hover:text-[#ff8a1f] transition-colors">
-                  Golden Temple</h3>
-                <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed">Also known as Sri Harmandir Sahib, it is the
-                  holiest Gurdwara of Sikhism.</p>
-              </div>
-            </div>
-
-            <!-- Card 4 -->
-            <div
-              class="place-card bg-white rounded-[2rem] overflow-hidden border border-gray-100 cursor-pointer hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] hover:border-orange-100 group relative lg:[&.active]:w-[480px] lg:[&.active]:max-w-none"
-              data-place="Mysore Palace"
-              data-image="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/Mysore_Palace_Morning.jpg">
-              <div class="overflow-hidden h-[200px] relative">
-                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10">
-                </div>
-                <img
-                  src="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/Mysore_Palace_Morning.jpg"
-                  alt="Mysore Palace"
-                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                <div
-                  class="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase text-gray-800 shadow-sm">
-                  Mysore</div>
-              </div>
-              <div class="p-6">
-                <span class="text-[11px] text-[#ff8a1f] font-bold uppercase tracking-widest">Royal</span>
-                <h3
-                  class="mt-2 mb-1 text-xl font-['Playfair_Display',_serif] font-bold text-gray-900 group-hover:text-[#ff8a1f] transition-colors">
-                  Mysore Palace</h3>
-                <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed">Historical palace and a royal residence at
-                  Mysore in Karnataka.</p>
-              </div>
-            </div>
-
-          </div>
+        <!-- Category Filters -->
+        <div class="flex items-center justify-center flex-wrap gap-2.5 pt-7" id="categoryFilters">
+          <button data-filter="all" class="liquid-pill active px-4 py-2 rounded-full text-xs font-bold text-white">✨ All Places</button>
+          <button data-filter="wonders" class="liquid-pill px-4 py-2 rounded-full text-xs font-semibold text-slate-300">🏛️ Wonders</button>
+          <button data-filter="forts" class="liquid-pill px-4 py-2 rounded-full text-xs font-semibold text-slate-300">🏰 Forts & Palaces</button>
+          <button data-filter="spiritual" class="liquid-pill px-4 py-2 rounded-full text-xs font-semibold text-slate-300">🛕 Spiritual</button>
+          <button data-filter="architecture" class="liquid-pill px-4 py-2 rounded-full text-xs font-semibold text-slate-300">📐 Architecture</button>
         </div>
 
-        <!-- Search Result Preview Card (Dynamic) -->
-        <div id="searchPreviewCard"
-          class="hidden place-card bg-white rounded-[2rem] overflow-hidden border border-gray-100 cursor-pointer hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] hover:border-orange-100 group relative">
-          <div class="overflow-hidden h-[200px] relative">
-            <img id="searchPreviewImage" src="" alt="" class="w-full h-full object-cover">
+        <!-- Quick Search Destination Suggestions -->
+        <div class="flex items-center justify-center gap-2 flex-wrap text-xs text-slate-400 mt-4">
+          <span class="font-medium text-slate-400">Popular:</span>
+          <button class="quick-chip hover:text-orange-300 hover:underline">Taj Mahal</button>
+          <span>•</span>
+          <button class="quick-chip hover:text-orange-300 hover:underline">Hawa Mahal</button>
+          <span>•</span>
+          <button class="quick-chip hover:text-orange-300 hover:underline">Golden Temple</button>
+          <span>•</span>
+          <button class="quick-chip hover:text-orange-300 hover:underline">Mysore Palace</button>
+          <span>•</span>
+          <button class="quick-chip hover:text-orange-300 hover:underline">Colosseum</button>
+          <span>•</span>
+          <button class="quick-chip hover:text-orange-300 hover:underline">Kyoto</button>
+        </div>
+      </section>
+
+      <!-- Grid & Interactive Experience Wrapper -->
+      <div class="cards cards-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full mx-auto min-h-[500px] relative
+                  lg:[&.faded]:flex lg:[&.faded]:flex-row lg:[&.faded]:items-start lg:[&.faded]:justify-center lg:[&.faded]:gap-12 lg:[&.faded]:pt-4">
+
+        <!-- Card 1: Taj Mahal -->
+        <div class="place-card liquid-card rounded-3xl overflow-hidden cursor-pointer group"
+          data-place="Taj Mahal"
+          data-category="wonders"
+          data-city="Agra, India"
+          data-tag="World Wonder"
+          data-image="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/Taj_Mahal_%28Edited%29.jpeg">
+          
+          <div class="overflow-hidden h-56 relative">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#070b14] via-black/20 to-transparent z-10"></div>
+            <img src="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/Taj_Mahal_%28Edited%29.jpeg" alt="Taj Mahal"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute top-4 left-4 z-20 flex gap-2">
+              <span class="bg-black/40 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[11px] font-bold text-white shadow-sm">📍 Agra</span>
+              <span class="bg-brand-500 text-white px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase shadow-[0_0_12px_rgba(255,122,24,0.6)]">★ 4.9</span>
+            </div>
+            <div class="absolute bottom-3 left-4 z-20 text-orange-300 text-xs font-semibold flex items-center gap-1.5 drop-shadow">
+              <svg class="w-3.5 h-3.5 text-brand-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
+              <span>Audio Guide Ready</span>
+            </div>
           </div>
           <div class="p-6">
-            <span class="text-[11px] text-[#ff8a1f] font-bold uppercase tracking-widest">Search Result</span>
-            <h3 id="searchPreviewTitle"
-              class="mt-2 mb-1 text-xl font-['Playfair_Display',_serif] font-bold text-gray-900"></h3>
-            <p class="text-sm text-gray-500">Destination found via search.</p>
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] text-orange-400 font-bold uppercase tracking-wider">World Wonder • 1648</span>
+              <span class="text-xs text-slate-400 font-medium">~2 min narration</span>
+            </div>
+            <h3 class="mt-2 mb-2 text-2xl font-display font-bold text-white group-hover:text-brand-400 transition-colors">Taj Mahal</h3>
+            <p class="text-sm text-slate-300 line-clamp-2 leading-relaxed">An immense mausoleum of white marble, built in Agra between 1631 and 1648 by Emperor Shah Jahan.</p>
+            <div class="mt-5 pt-4 border-t border-white/10 flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-200 group-hover:text-orange-300 flex items-center gap-1">
+                Listen AI Guide <span class="group-hover:translate-x-1 transition-transform">→</span>
+              </span>
+              <span class="text-xs bg-white/[0.06] border border-white/10 px-2.5 py-1 rounded-lg text-slate-300">Mughal Era</span>
+            </div>
           </div>
         </div>
 
-        <!-- Side Experience Panel -->
-        <div id="experience" class="hidden w-full max-w-[440px] shrink-0">
-          <div class="flex justify-start mb-6">
+        <!-- Card 2: Red Fort -->
+        <div class="place-card liquid-card rounded-3xl overflow-hidden cursor-pointer group"
+          data-place="Red Fort"
+          data-category="forts"
+          data-city="New Delhi, India"
+          data-tag="Historical Fort"
+          data-image="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/Delhi_fort.jpg">
+          
+          <div class="overflow-hidden h-56 relative">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#070b14] via-black/20 to-transparent z-10"></div>
+            <img src="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/Delhi_fort.jpg" alt="Red Fort"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute top-4 left-4 z-20 flex gap-2">
+              <span class="bg-black/40 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[11px] font-bold text-white shadow-sm">📍 New Delhi</span>
+              <span class="bg-brand-500 text-white px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase shadow-[0_0_12px_rgba(255,122,24,0.6)]">★ 4.8</span>
+            </div>
+            <div class="absolute bottom-3 left-4 z-20 text-orange-300 text-xs font-semibold flex items-center gap-1.5 drop-shadow">
+              <svg class="w-3.5 h-3.5 text-brand-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
+              <span>Audio Guide Ready</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] text-orange-400 font-bold uppercase tracking-wider">Imperial Fort • 1639</span>
+              <span class="text-xs text-slate-400 font-medium">~3 min narration</span>
+            </div>
+            <h3 class="mt-2 mb-2 text-2xl font-display font-bold text-white group-hover:text-brand-400 transition-colors">Red Fort</h3>
+            <p class="text-sm text-slate-300 line-clamp-2 leading-relaxed">The monumental red sandstone fortress that served as the primary residence of the Mughal Emperors for nearly 200 years.</p>
+            <div class="mt-5 pt-4 border-t border-white/10 flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-200 group-hover:text-orange-300 flex items-center gap-1">
+                Listen AI Guide <span class="group-hover:translate-x-1 transition-transform">→</span>
+              </span>
+              <span class="text-xs bg-white/[0.06] border border-white/10 px-2.5 py-1 rounded-lg text-slate-300">UNESCO Site</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Gateway of India -->
+        <div class="place-card liquid-card rounded-3xl overflow-hidden cursor-pointer group"
+          data-place="Gateway of India"
+          data-category="architecture"
+          data-city="Mumbai, India"
+          data-tag="Monument"
+          data-image="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/Mumbai_03-2016_30_Gateway_of_India.jpg">
+          
+          <div class="overflow-hidden h-56 relative">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#070b14] via-black/20 to-transparent z-10"></div>
+            <img src="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/Mumbai_03-2016_30_Gateway_of_India.jpg" alt="Gateway of India"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute top-4 left-4 z-20 flex gap-2">
+              <span class="bg-black/40 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[11px] font-bold text-white shadow-sm">📍 Mumbai</span>
+              <span class="bg-brand-500 text-white px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase shadow-[0_0_12px_rgba(255,122,24,0.6)]">★ 4.7</span>
+            </div>
+            <div class="absolute bottom-3 left-4 z-20 text-orange-300 text-xs font-semibold flex items-center gap-1.5 drop-shadow">
+              <svg class="w-3.5 h-3.5 text-brand-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
+              <span>Audio Guide Ready</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] text-orange-400 font-bold uppercase tracking-wider">Colonial Arch • 1924</span>
+              <span class="text-xs text-slate-400 font-medium">~2 min narration</span>
+            </div>
+            <h3 class="mt-2 mb-2 text-2xl font-display font-bold text-white group-hover:text-brand-400 transition-colors">Gateway of India</h3>
+            <p class="text-sm text-slate-300 line-clamp-2 leading-relaxed">A grand 20th-century arch-monument overlooking the Arabian Sea, blending Indo-Saracenic and Roman styles.</p>
+            <div class="mt-5 pt-4 border-t border-white/10 flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-200 group-hover:text-orange-300 flex items-center gap-1">
+                Listen AI Guide <span class="group-hover:translate-x-1 transition-transform">→</span>
+              </span>
+              <span class="text-xs bg-white/[0.06] border border-white/10 px-2.5 py-1 rounded-lg text-slate-300">Arabian Sea</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Hawa Mahal -->
+        <div class="place-card liquid-card rounded-3xl overflow-hidden cursor-pointer group"
+          data-place="Hawa Mahal"
+          data-category="architecture"
+          data-city="Jaipur, India"
+          data-tag="Architecture"
+          data-image="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg">
+          
+          <div class="overflow-hidden h-56 relative">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#070b14] via-black/20 to-transparent z-10"></div>
+            <img src="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg" alt="Hawa Mahal"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute top-4 left-4 z-20 flex gap-2">
+              <span class="bg-black/40 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[11px] font-bold text-white shadow-sm">📍 Jaipur</span>
+              <span class="bg-brand-500 text-white px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase shadow-[0_0_12px_rgba(255,122,24,0.6)]">★ 4.9</span>
+            </div>
+            <div class="absolute bottom-3 left-4 z-20 text-orange-300 text-xs font-semibold flex items-center gap-1.5 drop-shadow">
+              <svg class="w-3.5 h-3.5 text-brand-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
+              <span>Audio Guide Ready</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] text-orange-400 font-bold uppercase tracking-wider">Palace of Winds • 1799</span>
+              <span class="text-xs text-slate-400 font-medium">~2 min narration</span>
+            </div>
+            <h3 class="mt-2 mb-2 text-2xl font-display font-bold text-white group-hover:text-brand-400 transition-colors">Hawa Mahal</h3>
+            <p class="text-sm text-slate-300 line-clamp-2 leading-relaxed">The iconic pink sandstone honeycomb with 953 jharokha windows built to allow cool mountain breezes.</p>
+            <div class="mt-5 pt-4 border-t border-white/10 flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-200 group-hover:text-orange-300 flex items-center gap-1">
+                Listen AI Guide <span class="group-hover:translate-x-1 transition-transform">→</span>
+              </span>
+              <span class="text-xs bg-white/[0.06] border border-white/10 px-2.5 py-1 rounded-lg text-slate-300">Pink City</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5: Golden Temple -->
+        <div class="place-card liquid-card rounded-3xl overflow-hidden cursor-pointer group"
+          data-place="Golden Temple"
+          data-category="spiritual"
+          data-city="Amritsar, India"
+          data-tag="Spiritual"
+          data-image="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/The_Golden_Temple_of_Amrithsar_7.jpg">
+          
+          <div class="overflow-hidden h-56 relative">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#070b14] via-black/20 to-transparent z-10"></div>
+            <img src="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/The_Golden_Temple_of_Amrithsar_7.jpg" alt="Golden Temple"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute top-4 left-4 z-20 flex gap-2">
+              <span class="bg-black/40 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[11px] font-bold text-white shadow-sm">📍 Amritsar</span>
+              <span class="bg-brand-500 text-white px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase shadow-[0_0_12px_rgba(255,122,24,0.6)]">★ 5.0</span>
+            </div>
+            <div class="absolute bottom-3 left-4 z-20 text-orange-300 text-xs font-semibold flex items-center gap-1.5 drop-shadow">
+              <svg class="w-3.5 h-3.5 text-brand-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
+              <span>Audio Guide Ready</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] text-orange-400 font-bold uppercase tracking-wider">Sri Harmandir Sahib</span>
+              <span class="text-xs text-slate-400 font-medium">~3 min narration</span>
+            </div>
+            <h3 class="mt-2 mb-2 text-2xl font-display font-bold text-white group-hover:text-brand-400 transition-colors">Golden Temple</h3>
+            <p class="text-sm text-slate-300 line-clamp-2 leading-relaxed">The holiest Gurdwara in Sikhism, gilded with pure gold and surrounded by the sacred Amrit Sarovar lake.</p>
+            <div class="mt-5 pt-4 border-t border-white/10 flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-200 group-hover:text-orange-300 flex items-center gap-1">
+                Listen AI Guide <span class="group-hover:translate-x-1 transition-transform">→</span>
+              </span>
+              <span class="text-xs bg-white/[0.06] border border-white/10 px-2.5 py-1 rounded-lg text-slate-300">Holy Sanctuary</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6: Mysore Palace -->
+        <div class="place-card liquid-card rounded-3xl overflow-hidden cursor-pointer group"
+          data-place="Mysore Palace"
+          data-category="forts"
+          data-city="Mysore, Karnataka"
+          data-tag="Royal Palace"
+          data-image="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/Mysore_Palace_Morning.jpg">
+          
+          <div class="overflow-hidden h-56 relative">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#070b14] via-black/20 to-transparent z-10"></div>
+            <img src="https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/Mysore_Palace_Morning.jpg" alt="Mysore Palace"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute top-4 left-4 z-20 flex gap-2">
+              <span class="bg-black/40 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[11px] font-bold text-white shadow-sm">📍 Mysore</span>
+              <span class="bg-brand-500 text-white px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase shadow-[0_0_12px_rgba(255,122,24,0.6)]">★ 4.8</span>
+            </div>
+            <div class="absolute bottom-3 left-4 z-20 text-orange-300 text-xs font-semibold flex items-center gap-1.5 drop-shadow">
+              <svg class="w-3.5 h-3.5 text-brand-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
+              <span>Audio Guide Ready</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] text-orange-400 font-bold uppercase tracking-wider">Wadiyar Dynasty • 1912</span>
+              <span class="text-xs text-slate-400 font-medium">~3 min narration</span>
+            </div>
+            <h3 class="mt-2 mb-2 text-2xl font-display font-bold text-white group-hover:text-brand-400 transition-colors">Mysore Palace</h3>
+            <p class="text-sm text-slate-300 line-clamp-2 leading-relaxed">The lavish royal residence of Mysore, famous for its magnificent Durbar hall and illuminated evening lights.</p>
+            <div class="mt-5 pt-4 border-t border-white/10 flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-200 group-hover:text-orange-300 flex items-center gap-1">
+                Listen AI Guide <span class="group-hover:translate-x-1 transition-transform">→</span>
+              </span>
+              <span class="text-xs bg-white/[0.06] border border-white/10 px-2.5 py-1 rounded-lg text-slate-300">Royal Heritage</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Search Preview Card (For any searched global place) -->
+        <div id="searchPreviewCard"
+          class="place-card search-preview-card hidden liquid-card rounded-3xl overflow-hidden cursor-pointer">
+          <div class="overflow-hidden h-60 relative">
+            <img id="searchPreviewImage" src="" alt="Destination preview" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#070b14] via-black/30 to-transparent"></div>
+            <div class="absolute top-4 left-4 z-20 flex gap-2">
+              <span class="bg-brand-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase shadow-[0_0_12px_rgba(255,122,24,0.6)]">AI Discovered</span>
+              <span id="searchPreviewCity" class="bg-black/50 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-xs font-bold text-white shadow-sm">Global Landmark</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <span class="text-[11px] text-orange-400 font-bold uppercase tracking-widest">Custom Search Destination</span>
+            <h3 id="searchPreviewTitle" class="mt-2 mb-1 text-2xl font-display font-bold text-white"></h3>
+            <p id="searchPreviewDesc" class="text-sm text-slate-300 leading-relaxed">Custom place selected. Ready to generate audio guide and travel insights.</p>
+            <div class="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
+              <span class="text-xs font-bold text-orange-400 flex items-center gap-1">
+                Configure & Listen <span class="translate-x-0.5">→</span>
+              </span>
+              <a id="searchMapsLink" href="#" target="_blank" class="text-xs text-slate-400 hover:text-orange-300 flex items-center gap-1">
+                📍 View Map
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive AI Experience Studio (Focused Liquid Glass Tablet) -->
+        <div id="experience" class="hidden w-full max-w-[540px] shrink-0">
+          
+          <div class="flex items-center justify-between mb-4">
             <button id="closeExperience"
-              class="px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-medium text-gray-600 hover:text-[#ff8a1f] hover:border-[#ff8a1f]/30 hover:shadow-sm transition-all flex items-center gap-2 group">
-              <span class="group-hover:-translate-x-0.5 transition-transform">←</span> Back to Places
+              class="px-4 py-2 bg-white/[0.08] backdrop-blur-md border border-white/15 rounded-full text-xs font-bold text-slate-200 hover:text-white hover:border-brand-500 hover:bg-white/[0.14] transition-all flex items-center gap-2 group">
+              <span class="group-hover:-translate-x-1 transition-transform">←</span>
+              <span>Back to All Places</span>
             </button>
+            <a id="mapsDirectBtn" href="#" target="_blank"
+              class="px-3.5 py-1.5 bg-orange-500/10 border border-orange-500/30 rounded-full text-xs font-semibold text-orange-300 hover:bg-orange-500/20 transition-colors flex items-center gap-1.5">
+              <span>📍 Google Maps</span>
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
           </div>
 
-          <div class="p-8 bg-white border border-gray-100 rounded-[2rem] shadow-2xl shadow-gray-200/50">
-            <div class="border-b border-dashed border-gray-200 mb-6 pb-6">
-              <span
-                class="text-[10px] font-bold uppercase tracking-widest text-[#ff8a1f] bg-orange-50 px-2 py-1 rounded-md">AI
-                Guide Ready</span>
-              <h3 id="previewTitle"
-                class="mt-3 text-3xl font-['Playfair_Display',_serif] font-bold text-gray-900 leading-tight"></h3>
-            </div>
-
-            <!-- Options: Length -->
-            <div class="mb-6">
-              <h4 class="mb-3 text-xs uppercase tracking-widest text-gray-400 font-bold">Duration & Detail</h4>
-              <div class="flex gap-4" data-group="length">
-                <button
-                  class="option active flex-1 p-4 rounded-2xl border border-gray-200 bg-gray-50 text-left cursor-pointer hover:border-[#ff8a1f] transition-all relative overflow-hidden group [&.active]:bg-[#fff1e5] [&.active]:border-[#ff8a1f] [&.active]:shadow-lg [&.active]:shadow-orange-100"
-                  data-value="Summary">
-                  <div class="relative z-10">
-                    <strong class="block text-sm mb-1 text-gray-900">Summarized</strong>
-                    <span class="text-xs text-gray-500 group-hover:text-[#ff8a1f]/80">~1 min overview</span>
-                  </div>
-                </button>
-                <button
-                  class="option flex-1 p-4 rounded-2xl border border-gray-200 bg-gray-50 text-left cursor-pointer hover:border-[#ff8a1f] transition-all relative overflow-hidden group [&.active]:bg-[#fff1e5] [&.active]:border-[#ff8a1f] [&.active]:shadow-lg [&.active]:shadow-orange-100"
-                  data-value="Detailed">
-                  <div class="relative z-10">
-                    <strong class="block text-sm mb-1 text-gray-900">Detailed</strong>
-                    <span class="text-xs text-gray-500 group-hover:text-[#ff8a1f]/80">~3 min guide</span>
-                  </div>
-                </button>
+          <!-- Studio Liquid Glass Box -->
+          <div class="p-6 sm:p-8 liquid-panel rounded-[2rem] relative overflow-hidden">
+            
+            <!-- Header Info -->
+            <div class="border-b border-white/10 pb-5 mb-6">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-orange-300 bg-orange-500/15 border border-orange-500/30 px-2.5 py-1 rounded-md shadow-[0_0_15px_rgba(255,122,24,0.2)]">
+                  ✨ Interactive AI Audio Studio
+                </span>
+                <span id="guideTagline" class="text-xs text-slate-400 italic font-medium hidden sm:inline"></span>
               </div>
+              <h2 id="previewTitle" class="text-3xl font-display font-extrabold text-white leading-tight"></h2>
             </div>
 
-            <!-- Options: Language & Voice -->
-            <div class="mb-8">
-              <h4 class="mb-3 text-xs uppercase tracking-widest text-gray-400 font-bold">Audio Settings</h4>
-              <div class="flex gap-3">
-                <div class="relative flex-1">
-                  <select id="selectLanguage"
-                    class="w-full appearance-none px-5 py-3.5 rounded-xl border border-gray-200 text-sm font-semibold focus:outline-none focus:border-[#ff8a1f] bg-white text-gray-800 shadow-sm">
-                    <option>English</option>
-                    <option>Hindi</option>
-                    <option>Tamil</option>
-                    <option>Telugu</option>
-                  </select>
-                  <div class="absolute right-4 top-4 text-gray-400 pointer-events-none text-xs">▼</div>
-                </div>
+            <!-- Configuration Form -->
+            <div class="space-y-6">
 
-                <div class="flex gap-1.5 bg-gray-100 p-1.5 rounded-xl" data-group="voice">
-                  <button
-                    class="option active px-4 py-2 rounded-lg text-xs font-semibold text-gray-600 transition-all [&.active]:bg-white [&.active]:text-gray-900 [&.active]:shadow-sm"
-                    data-value="Male">Male</button>
-                  <button
-                    class="option px-4 py-2 rounded-lg text-xs font-semibold text-gray-600 transition-all [&.active]:bg-white [&.active]:text-gray-900 [&.active]:shadow-sm"
-                    data-value="Female">Female</button>
+              <!-- Duration & Detail Level -->
+              <div>
+                <label class="block mb-2 text-xs uppercase tracking-wider text-slate-400 font-bold">1. Guide Style & Depth</label>
+                <div class="grid grid-cols-2 gap-3" data-group="length">
+                  <button type="button"
+                    class="option active p-3.5 rounded-2xl border border-white/15 bg-white/[0.04] backdrop-blur-md text-left cursor-pointer hover:border-brand-500/60 transition-all [&.active]:bg-gradient-to-br [&.active]:from-orange-500/25 [&.active]:to-orange-600/10 [&.active]:border-brand-500 [&.active]:shadow-[0_0_20px_rgba(255,122,24,0.3)]"
+                    data-value="Summary">
+                    <div class="flex items-center justify-between mb-1">
+                      <strong class="text-xs font-bold text-white">⚡ Quick Summary</strong>
+                      <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/20 text-orange-200 font-semibold">~1 min</span>
+                    </div>
+                    <span class="text-[11px] text-slate-300 block leading-snug">Concise historical overview & core highlights</span>
+                  </button>
+
+                  <button type="button"
+                    class="option p-3.5 rounded-2xl border border-white/15 bg-white/[0.04] backdrop-blur-md text-left cursor-pointer hover:border-brand-500/60 transition-all [&.active]:bg-gradient-to-br [&.active]:from-orange-500/25 [&.active]:to-orange-600/10 [&.active]:border-brand-500 [&.active]:shadow-[0_0_20px_rgba(255,122,24,0.3)]"
+                    data-value="Detailed">
+                    <div class="flex items-center justify-between mb-1">
+                      <strong class="text-xs font-bold text-white">📖 Storytelling Tour</strong>
+                      <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/20 text-orange-200 font-semibold">~3 min</span>
+                    </div>
+                    <span class="text-[11px] text-slate-300 block leading-snug">Deep lore, architecture secrets & vivid anecdotes</span>
+                  </button>
                 </div>
               </div>
+
+              <!-- Audio Language & Voice Persona -->
+              <div>
+                <label class="block mb-2 text-xs uppercase tracking-wider text-slate-400 font-bold">2. Narration Language & Voice</label>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  
+                  <!-- Language Selector -->
+                  <div class="relative">
+                    <select id="selectLanguage"
+                      class="w-full appearance-none px-4 py-3 rounded-2xl border border-white/15 text-xs font-bold focus:outline-none focus:border-brand-500 bg-slate-900/80 backdrop-blur-md text-white shadow-sm cursor-pointer">
+                      <option value="English">🇬🇧 English (Global)</option>
+                      <option value="Hindi">🇮🇳 Hindi (हिन्दी)</option>
+                      <option value="Tamil">🇮🇳 Tamil (தமிழ்)</option>
+                      <option value="Telugu">🇮🇳 Telugu (తెలుగు)</option>
+                    </select>
+                    <div class="absolute right-4 top-3.5 text-slate-400 pointer-events-none text-xs">▼</div>
+                  </div>
+
+                  <!-- Voice Gender Toggle -->
+                  <div class="flex border border-white/15 rounded-2xl overflow-hidden bg-white/[0.04] backdrop-blur-md p-1" data-group="voice">
+                    <button type="button"
+                      class="active flex-1 py-2 rounded-xl text-xs font-bold text-slate-300 transition-all flex items-center justify-center gap-1.5 [&.active]:bg-gradient-to-r [&.active]:from-orange-500 [&.active]:to-amber-500 [&.active]:text-white [&.active]:shadow-[0_0_15px_rgba(255,122,24,0.4)]"
+                      data-value="Male">
+                      <span>👨</span> Male Voice
+                    </button>
+                    <button type="button"
+                      class="flex-1 py-2 rounded-xl text-xs font-bold text-slate-300 transition-all flex items-center justify-center gap-1.5 [&.active]:bg-gradient-to-r [&.active]:from-orange-500 [&.active]:to-amber-500 [&.active]:text-white [&.active]:shadow-[0_0_15px_rgba(255,122,24,0.4)]"
+                      data-value="Female">
+                      <span>👩</span> Female Voice
+                    </button>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
-            <!-- Action Button -->
-            <button id="generateBtn"
-              class="w-full py-4 bg-[#ff8a1f] hover:bg-[#e07512] text-white font-bold rounded-2xl shadow-xl shadow-orange-500/25 transition-all text-sm tracking-wide">
-              Generate Audio Guide
-            </button>
+            <!-- Primary Action Button -->
+            <div class="mt-7">
+              <button id="generateBtn"
+                class="glow-btn w-full py-4 text-white rounded-2xl font-bold text-sm flex items-center justify-center gap-2 border border-white/30">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"></path>
+                </svg>
+                <span>Generate AI Audio Guide</span>
+              </button>
+              
+              <!-- Generation status feedback -->
+              <p id="generatingStatus" class="hidden text-center text-xs text-orange-400 font-semibold mt-3 animate-pulse">
+                🎙️ Synthesizing rich narration & audio guide...
+              </p>
+            </div>
 
-            <!-- Audio & Transcript Container -->
-            <div id="audioSection" class="hidden mt-6 pt-6 border-t border-gray-100">
-              <audio id="audioPlayer" controls class="w-full mb-4 rounded-lg"></audio>
+            <!-- Audio Player & Experience Section -->
+            <div id="audioSection" class="hidden mt-8 pt-6 border-t border-white/10">
+              
+              <!-- Fast Fact Cards Grid -->
+              <div id="destinationInsights" class="hidden grid grid-cols-2 gap-3 mb-6">
+                <div class="bg-amber-500/10 border border-amber-500/20 p-3.5 rounded-2xl backdrop-blur-md">
+                  <div class="text-[10px] uppercase font-bold text-amber-300 tracking-wider">🕒 Best Time to Visit</div>
+                  <div id="bestTimeVal" class="text-xs font-semibold text-white mt-1">October to March</div>
+                </div>
+                <div class="bg-orange-500/10 border border-orange-500/20 p-3.5 rounded-2xl backdrop-blur-md">
+                  <div class="text-[10px] uppercase font-bold text-orange-300 tracking-wider">💡 Insider Secret</div>
+                  <div id="insiderTipVal" class="text-xs font-semibold text-white mt-1">Sunrise yields best views</div>
+                </div>
+              </div>
 
-              <!-- Collapsible Transcript -->
-              <div class="border border-gray-100 rounded-xl overflow-hidden bg-gray-50/50">
-                <button id="transcriptToggle"
-                  class="w-full px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500 hover:text-gray-900 flex justify-between items-center transition-colors">
-                  <span>View Script & Transcript</span>
-                  <span id="transcriptArrow" class="transition-transform duration-200">▼</span>
-                </button>
-                <div id="transcriptContent" class="hidden px-4 pb-4 text-sm text-gray-600 leading-relaxed max-h-48 overflow-y-auto no-scrollbar">
+              <!-- Top Highlights Tags -->
+              <div id="highlightsContainer" class="hidden mb-6">
+                <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-2">⭐ Key Cultural Highlights</div>
+                <div id="highlightsList" class="flex flex-wrap gap-1.5"></div>
+              </div>
+
+              <!-- High-End Liquid Audio Controller Card -->
+              <div class="bg-black/60 backdrop-blur-xl border border-white/15 rounded-2xl p-5 shadow-[0_10px_35px_rgba(0,0,0,0.6)] relative overflow-hidden mb-6">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="flex items-center gap-3">
+                    <div id="playBtn" class="w-12 h-12 rounded-full bg-gradient-to-tr from-brand-500 to-amber-400 text-white flex items-center justify-center cursor-pointer shadow-[0_0_20px_rgba(255,122,24,0.6)] hover:scale-105 active:scale-95 transition-all border border-white/30">
+                      <svg id="playIcon" class="w-5 h-5 translate-x-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11v11.78a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                      </svg>
+                      <svg id="pauseIcon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-white tracking-wide">Audio Narration</div>
+                      <div class="text-[11px] text-slate-400 flex items-center gap-2 mt-0.5">
+                        <span id="audioTimer">0:00 / 0:00</span>
+                        <span>•</span>
+                        <span id="voiceBadge" class="text-orange-400 font-semibold">Studio Quality</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Waveform Equalizer -->
+                  <div id="visualizer" class="flex items-center gap-1 h-8 px-2">
+                    <span class="visualizer-bar"></span>
+                    <span class="visualizer-bar"></span>
+                    <span class="visualizer-bar"></span>
+                    <span class="visualizer-bar"></span>
+                    <span class="visualizer-bar"></span>
+                    <span class="visualizer-bar"></span>
+                    <span class="visualizer-bar"></span>
+                    <span class="visualizer-bar"></span>
+                  </div>
+                </div>
+
+                <!-- Custom Progress Bar -->
+                <div class="relative w-full h-2 bg-white/10 rounded-full cursor-pointer overflow-hidden group mb-4" id="progressBarContainer">
+                  <div id="progressBar" class="h-full bg-gradient-to-r from-brand-500 to-amber-400 rounded-full w-0 transition-all shadow-[0_0_10px_rgba(255,122,24,0.6)]"></div>
+                </div>
+
+                <!-- Audio Action Controls -->
+                <div class="flex items-center justify-between text-xs text-slate-300 pt-1">
+                  <div class="flex items-center gap-2">
+                    <button id="speedBtn" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-[11px] font-bold text-white transition-colors border border-white/10">1.0x</button>
+                    <button id="rewindBtn" class="p-1 hover:text-white transition-colors" title="Rewind 10s">↺ 10s</button>
+                    <button id="forwardBtn" class="p-1 hover:text-white transition-colors" title="Forward 10s">10s ↻</button>
+                  </div>
+                  
+                  <div class="flex items-center gap-2">
+                    <a id="downloadAudioBtn" href="#" download="travel-guide.mp3" class="px-3 py-1 bg-orange-500/20 hover:bg-orange-500/30 text-orange-300 rounded-lg text-[11px] font-semibold flex items-center gap-1 transition-colors border border-orange-500/30">
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                      <span>Download MP3</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Hidden Native Audio for playback -->
+                <audio id="audioPlayer" class="hidden"></audio>
+              </div>
+
+              <!-- Transcript Box -->
+              <div class="border border-white/15 rounded-2xl bg-white/[0.04] backdrop-blur-md p-4 mb-6">
+                <div class="flex justify-between items-center cursor-pointer select-none group" id="transcriptToggle">
+                  <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <span class="text-xs font-bold text-slate-200 group-hover:text-orange-300 transition-colors uppercase tracking-wider">
+                      Read Full Story Transcript
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button id="copyTranscriptBtn" class="text-[11px] text-slate-400 hover:text-white font-semibold px-2 py-0.5 rounded hover:bg-white/10 transition-all border border-white/10">Copy</button>
+                    <span class="text-[10px] text-slate-400 transition-transform duration-200" id="transcriptArrow">▼</span>
+                  </div>
+                </div>
+                <div class="hidden mt-4 max-h-56 overflow-y-auto text-sm leading-relaxed text-slate-300 pr-2" id="transcriptContent">
                   <p id="scriptText" class="whitespace-pre-line"></p>
                 </div>
               </div>
+
+              <!-- Interactive "Ask the AI Guide" Q&A Concierge -->
+              <div class="border border-white/15 rounded-2xl bg-gradient-to-br from-orange-500/10 via-purple-500/5 to-transparent backdrop-blur-md p-5 shadow-sm">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="text-base">💬</span>
+                  <h4 class="text-xs uppercase font-extrabold text-white tracking-wider">Ask Your AI Guide Anything</h4>
+                </div>
+                <p class="text-[11px] text-slate-300 mb-3">Have questions about visiting hours, photo spots, or local food? Ask below:</p>
+                
+                <div class="flex gap-2 mb-3">
+                  <input type="text" id="guideQuestionInput" placeholder="e.g. Best photography spot? Nearby street food?"
+                    class="flex-1 px-4 py-2.5 rounded-xl border border-white/15 text-xs bg-black/40 backdrop-blur-md text-white placeholder-slate-400 focus:outline-none focus:border-brand-500 shadow-sm">
+                  <button id="askGuideBtn"
+                    class="glow-btn px-4 py-2.5 rounded-xl text-white font-bold text-xs active:scale-95 transition-all border border-white/20">
+                    Ask
+                  </button>
+                </div>
+
+                <!-- Quick Prompt Chips -->
+                <div class="flex flex-wrap gap-1.5 mb-3 text-[10px]">
+                  <button class="qa-chip px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/15 text-slate-300 hover:border-brand-400 hover:text-white">📸 Best photo angle?</button>
+                  <button class="qa-chip px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/15 text-slate-300 hover:border-brand-400 hover:text-white">🍲 Famous food nearby?</button>
+                  <button class="qa-chip px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/15 text-slate-300 hover:border-brand-400 hover:text-white">👗 Dress code / etiquette?</button>
+                </div>
+
+                <!-- Q&A Response Box -->
+                <div id="guideAnswerBox" class="hidden mt-3 p-3.5 rounded-xl bg-black/50 backdrop-blur-md border border-orange-500/30 text-xs text-slate-200 leading-relaxed shadow-sm">
+                  <div class="flex items-center gap-1.5 font-bold text-orange-400 text-[11px] mb-1">
+                    <span>🧭 Tour Guide:</span>
+                  </div>
+                  <p id="guideAnswerText"></p>
+                </div>
+              </div>
+
             </div>
 
           </div>
         </div>
 
       </div>
-    </main>
+
+    </div>
+  </main>
+
+  <!-- Notification Toast -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="px-5 py-3 rounded-2xl bg-black/80 backdrop-blur-xl border border-white/20 text-white text-xs font-semibold shadow-2xl flex items-center gap-2.5">
+      <span id="toastIcon">✨</span>
+      <span id="toastMessage">Guide ready!</span>
+    </div>
   </div>
+
+  <!-- Footer -->
+  <footer class="liquid-glass-nav py-8 px-6 text-center text-xs text-slate-400 relative z-10 border-t border-white/10">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-display font-bold text-white text-sm">WanderAI</span>
+        <span>•</span>
+        <span>Liquid Glassmorphism Audio Companion</span>
+      </div>
+      <div>
+        Powered by Google Gemini 3.8 & Murf Falcon TTS
+      </div>
+    </div>
+  </footer>
 
   <script src="index.js"></script>
 </body>

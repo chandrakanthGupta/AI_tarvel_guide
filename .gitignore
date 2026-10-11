@@ -13,3 +13,7 @@ __pycache__/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Flask instance
+instance/
+Backend/instance/
